@@ -31,7 +31,7 @@
         while($row = mysqli_fetch_assoc($result)) {
           $datelog = $row['datelog'];
                 $documentcode = $row['documentcode'];
-                $action = $row['action'];
+                $action = $row['task_status'];
                 $remarks = $row['remarks'];
                 $employee_id = $row['employee_id'];
                 $office_id = $row['office_id'];
@@ -63,7 +63,7 @@
                     $employee_id =mysqli_real_escape_string($db,$_POST['employee_id']);
                     $office_id =mysqli_real_escape_string($db,$_POST['office_id']);
 
-                    $query = "UPDATE transaction SET  documentcode ='".$_POST['documentcode']."', action ='".$_POST['action']."', remarks='".$_POST['remarks']."', employee_id='".$_POST['employee_id']."', office_id='".$_POST['office_id']."'WHERE id=" . $_GET['id'];
+                    $query = "UPDATE transaction SET  documentcode ='".$_POST['documentcode']."', task_status ='".$_POST['action']."', remarks='".$_POST['remarks']."', employee_id='".$_POST['employee_id']."', office_id='".$_POST['office_id']."'WHERE id=" . $_GET['id'];
 
                     if (mysqli_query($db, $query)){
 

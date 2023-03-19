@@ -34,13 +34,13 @@
 
                 if(isset($_POST['submit'])){
                     $documentcode =mysqli_real_escape_string($db,$_POST['documentcode']);
-                    $action =mysqli_real_escape_string($db,$_POST['action']);
+                    $task_status =mysqli_real_escape_string($db,$_POST['task_status']);
                     $remarks =mysqli_real_escape_string($db,$_POST['remarks']);
                     $employee_id =mysqli_real_escape_string($db,$_POST['employee_id']);
                     $office_id =mysqli_real_escape_string($db,$_POST['office_id']);
 
-                    $query = "INSERT INTO transaction (documentcode, action, remarks, employee_id, office_id) 
-                    VALUES('$documentcode','$action','$remarks','$employee_id','$office_id')";
+                    $query = "INSERT INTO transaction (documentcode, task_status, remarks, employee_id, office_id) 
+                    VALUES('$documentcode','$task_status','$remarks','$employee_id','$office_id')";
 
                     if (mysqli_query($db, $query)){
 
@@ -70,8 +70,8 @@
                                             </div>
                                             <div class="col-md-4 pr-1">
                                                 <div class="form-group">
-                                                    <label>Action</label>
-                                                    <select class="form-control" name="action">
+                                                    <label>Tast Status</label>
+                                                    <select class="form-control" name="task_status">
                                                     <option>
                                                         Select...
                                                     </option>

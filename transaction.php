@@ -17,15 +17,16 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="assets/css/demo.css" rel="stylesheet" />
 </head>
+
+
+
 <?php 
     require("config/db.php");
-    
     if (!isset ($_GET['search']) ) {  
         $search = "";  
     } else {  
         $search = $_GET['search'];   
     }
-
     
     $nresults = 25;
 
@@ -44,28 +45,24 @@
     $pfirstr = ($page-1) *$nresults;
 
     if (strlen($search) > 0){
-        $query = 'SELECT transaction.id,transaction.datelog, transaction.documentcode, transaction.action, employee.firstname as office_name, CONCAT(employee.lastname,", ", employee.firstname) AS employee_fullname, transaction.remarks  FROM transaction, employee, office
-        WHERE transaction.employee_id=employee.id and transaction.office_id=office.id and transaction.documentcode='. $search . ' ORDER BY transaction.documentcode, transaction.datelog LIMIT ' . $pfirstr . ',' . $nresults;
+        $query = 'SELECT transaction.id, transaction.datelog, transaction.documentcode, transaction.task_status, employee.firstname 
+        as office_name, CONCAT(employee.lastname,", ", employee.firstname) AS employee_fullname, transaction.remarks  
+        FROM transaction, employee, office
+        WHERE transaction.employee_id=employee.id and transaction.office_id=office.id 
+        and transaction.documentcode='. $search . ' ORDER BY transaction.documentcode, transaction.datelog LIMIT ' . $pfirstr . ',' . $nresults;
 
     }else{
-        $query = 'SELECT transaction.id,transaction.datelog, transaction.documentcode, transaction.action, office.name as office_name, CONCAT(employee.lastname,", ", employee.firstname) AS employee_fullname, transaction.remarks  FROM transaction, employee, office
+        $query = 'SELECT transaction.id,transaction.datelog, transaction.documentcode, transaction.task_status, office.name 
+        as office_name, CONCAT(employee.lastname,", ", employee.firstname) AS employee_fullname, transaction.remarks  
+        FROM transaction, employee, office
         WHERE transaction.employee_id=employee.id and transaction.office_id=office.id ORDER BY transaction.documentcode, transaction.datelog LIMIT ' . $pfirstr . ',' . $nresults;
     }
 
-
-
-	// Get Result
 	$result = mysqli_query($db, $query);
-
-	// Fetch Data
 	$transactions = mysqli_fetch_all($result, MYSQLI_ASSOC);
-	//var_dump($posts);
-
-	// Free Result
 	mysqli_free_result($result);
-
-	// Close Connection
     mysqli_close($db);
+
 ?>
 <body>
     <div class="wrapper">
@@ -102,10 +99,10 @@
                                         <thead>
 
                                             <th>datelog</th>
-                                            <th>action</th>
+                                            <th>task_status</th>
                                             <th>remarks</th>
                                             <th>documentCode</th>
-                                            <th>Action</th>
+                                            <th>task_status</th>
                                         </thead>
                                         <tbody>
                                         <?php foreach($transactions as $transaction): ?>
@@ -113,7 +110,7 @@
                                              
         
                                                 <td><?php echo $transaction['datelog'] ?></td>
-                                                <td><?php echo $transaction['action'] ?></td>
+                                                <td><?php echo $transaction['task_status'] ?></td>
                                                 <td><?php echo $transaction['remarks'] ?></td>
                                                 <td><?php echo $transaction['documentcode'] ?></td>
                                                 <td>
